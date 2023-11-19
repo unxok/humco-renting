@@ -6,7 +6,7 @@ export type ListingHPM = {
   logo_url: string;
   rental_application_url: string;
   available: boolean;
-  advertised_lease_term: string | number;
+  advertised_lease_term: string;
   portfolio_postal_code: string;
   full_address: string;
   utilities: string;
@@ -19,7 +19,7 @@ export type ListingHPM = {
   id: number;
   property_uid: string;
   payee_account_number_token: string;
-  posted_to_website_at: Date;
+  posted_to_website_at: string;
   contact_phone_number: string;
   payee_routing_number: string;
   revenue_management_property: boolean;
@@ -48,11 +48,11 @@ export type ListingHPM = {
   appliances: string;
   by_the_bed: boolean;
   address_state: string;
-  created_at: Date;
+  created_at: string;
   marketing_title: string;
   unit_template_name: string;
   default_photo_thumbnail_url: string;
-  updated_at: Date;
+  updated_at: string;
   fee_label: string;
   address_longitude: number;
   property_type: string;
@@ -64,7 +64,7 @@ export type ListingHPM = {
   database_name: string;
   address_postal_code: string;
   address_country: string;
-  available_date: Date;
+  available_date: string;
   portfolio_name: string;
   marketing_description: string;
   address_city: string;

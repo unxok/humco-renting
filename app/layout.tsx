@@ -26,7 +26,7 @@ export default async function RootLayout({
       <body className='bg-background text-foreground'>
         <main className='min-h-screen flex flex-col items-center'>
           <NavBar user={user}></NavBar>
-          <div className='z-[99998] bg-accent fixed inset-0 flex flex-col justify-center items-center'>
+          <div className='z-[99998] bg-accent flex flex-col justify-center items-center'>
             {children}
           </div>
         </main>
