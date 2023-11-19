@@ -4,7 +4,7 @@ A project to display all rentals in Humboldt County
 
 ## To Do
 
-- [ ] Sign up and Login in
+- [x] Sign up and Login in
 - [ ] Account preferences and log out
-- [ ] web scraper
+- [?] web scraper
 - [ ] ...more
