@@ -1,28 +1,36 @@
-import { GeistSans } from 'geist/font/sans'
-import './globals.css'
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000'
+import { GeistSans } from "geist/font/sans";
+import "./globals.css";
+import Link from "next/link";
+import AuthButton from "@/components/NavBar/AuthButton";
+import sbServer from "@/utils/supabase/SupabaseClients/sbServer";
+import { NavBar } from "@/components/NavBar";
+import { ReactNode } from "react";
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
-}
+  title: "HumCoRenting",
+  description: "The one stop spot for rentals in Humboldt County",
+};
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode;
 }) {
+  const db = sbServer();
+  const {
+    data: { user },
+  } = await db.auth.getUser();
+
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
+    <html lang='en' className={GeistSans.className}>
+      <body className='bg-background text-foreground'>
+        <main className='min-h-screen flex flex-col items-center'>
+          <NavBar user={user}></NavBar>
+          <div className='z-[99998] bg-accent fixed inset-0 flex flex-col justify-center items-center'>
+            {children}
+          </div>
         </main>
       </body>
     </html>
-  )
+  );
 }
