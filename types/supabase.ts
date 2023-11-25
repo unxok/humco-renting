@@ -9,6 +9,42 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      listing_likes: {
+        Row: {
+          created_at: string
+          id: number
+          listing_id: number
+          profile_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          listing_id: number
+          profile_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          listing_id?: number
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listing_likes_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "listing_likes_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       listings: {
         Row: {
           address_city: string | null
@@ -23,16 +59,18 @@ export interface Database {
           bathrooms: number | null
           bedrooms: number | null
           building_type: string | null
-          cats_allowed: string | null
+          cats_allowed: boolean | null
           description: string | null
-          dogs_allowed: string | null
+          dogs_allowed: boolean | null
           full_address: string | null
           id: number
           is_listed: boolean
           lease_length: string | null
+          likes: number
           listed_at: string | null
+          picture_urls: string[] | null
           pm_id: number | null
-          pm_id_plus_listed_date: string
+          pm_id_plus_pmListingId: string
           property_management_id: number | null
           rent: number | null
           scraped_at: string
@@ -53,16 +91,18 @@ export interface Database {
           bathrooms?: number | null
           bedrooms?: number | null
           building_type?: string | null
-          cats_allowed?: string | null
+          cats_allowed?: boolean | null
           description?: string | null
-          dogs_allowed?: string | null
+          dogs_allowed?: boolean | null
           full_address?: string | null
           id?: number
           is_listed?: boolean
           lease_length?: string | null
+          likes?: number
           listed_at?: string | null
+          picture_urls?: string[] | null
           pm_id?: number | null
-          pm_id_plus_listed_date: string
+          pm_id_plus_pmListingId: string
           property_management_id?: number | null
           rent?: number | null
           scraped_at?: string
@@ -83,16 +123,18 @@ export interface Database {
           bathrooms?: number | null
           bedrooms?: number | null
           building_type?: string | null
-          cats_allowed?: string | null
+          cats_allowed?: boolean | null
           description?: string | null
-          dogs_allowed?: string | null
+          dogs_allowed?: boolean | null
           full_address?: string | null
           id?: number
           is_listed?: boolean
           lease_length?: string | null
+          likes?: number
           listed_at?: string | null
+          picture_urls?: string[] | null
           pm_id?: number | null
-          pm_id_plus_listed_date?: string
+          pm_id_plus_pmListingId?: string
           property_management_id?: number | null
           rent?: number | null
           scraped_at?: string
@@ -152,16 +194,19 @@ export interface Database {
         Row: {
           created_at: string
           id: number
+          logo_url: string | null
           name: string
         }
         Insert: {
           created_at?: string
           id?: number
+          logo_url?: string | null
           name: string
         }
         Update: {
           created_at?: string
           id?: number
+          logo_url?: string | null
           name?: string
         }
         Relationships: []

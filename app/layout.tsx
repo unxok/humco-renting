@@ -8,7 +8,20 @@ import { ReactNode } from "react";
 
 export const metadata = {
   title: "HumCoRenting",
+  metadataBase: new URL("http://localhost:3000"),
   description: "The one stop spot for rentals in Humboldt County",
+  openGraph: {
+    title: "HumCoRenting",
+    description: "this is the desciption",
+    image: "url/image.png",
+  },
+  twitter: {
+    card: "Not configured!",
+    site: "@not-configured",
+    title: "HumCoRenting",
+    description: "The one stop spot for rentals in Humboldt County",
+    image: "url/image.png",
+  },
 };
 
 export default async function RootLayout({

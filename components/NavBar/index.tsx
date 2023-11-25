@@ -7,7 +7,9 @@ export const NavBar = ({ user }: { user: User | null }) => {
     <nav className='z-[99999] sticky top-0 w-full flex justify-center border-b border-b-foreground/10 h-16 bg-accent'>
       <div className='w-full flex justify-between items-center p-3 text-sm'>
         <div className='text-4xl font-bold tracking-widest text-primary'>
-          <Link href={"/"}>HumCoRenting</Link>
+          <Link scroll={false} href={"/"}>
+            HumCoRenting
+          </Link>
         </div>
         <div>links... asdlfkj asldfkj laksdjf</div>
         <AuthButton user={user} />

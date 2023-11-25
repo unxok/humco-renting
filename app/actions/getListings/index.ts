@@ -8,12 +8,9 @@ import puppeteer from "puppeteer";
 const getListings = async () => {
   const db = sbServer();
 
-  const {
-    data: { user },
-  } = await db.auth.getUser();
   const listingsToInsert: Omit<
     Database["public"]["Tables"]["listings"]["Row"],
-    "id" | "admin_hidden"
+    "id" | "admin_hidden" | "likes"
   >[] = [];
 
   const propertyManagementsQuery = await db
@@ -56,15 +53,24 @@ const getListings = async () => {
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
             building_type: data.property_type,
-            cats_allowed: data.cats,
+            cats_allowed: data.cats.includes("not")
+              ? false
+              : data.cats.includes("unspecified")
+              ? null
+              : true,
             description: data.marketing_title,
-            dogs_allowed: data.dogs,
+            dogs_allowed: data.dogs.includes("not")
+              ? false
+              : data.cats.includes("unspecified")
+              ? null
+              : true,
             full_address: data.full_address,
             lease_length: data.advertised_lease_term,
             is_listed: true,
             listed_at: data.posted_to_website_at,
+            picture_urls: data.photos.map(({ url }: { url: string }) => url),
             pm_id: data.id,
-            pm_id_plus_listed_date: data.id + data.posted_to_website_at,
+            pm_id_plus_pmListingId: data.id + data.listable_uid,
             property_management_id: pmMap[data.portfolio_name],
             rent: data.market_rent,
             scraped_at: new Date().toISOString().toString(),
@@ -73,10 +79,18 @@ const getListings = async () => {
             thumbnail_url: data.photos[0] ? data.photos[0].url : "",
           });
         });
+
+        // 'unlist' all listings
+        const unlistAllQuery = await db
+          .from("listings")
+          .update({ is_listed: false })
+          .eq("is_listed", true);
+        console.log("error in ulisting?", unlistAllQuery.error);
+
         const upsertOperation = await db
           .from("listings")
           .upsert(listingsToInsert, {
-            onConflict: "pm_id_plus_listed_date",
+            onConflict: "pm_id_plus_pmListingId",
             ignoreDuplicates: false,
           });
         console.log("upsert data", upsertOperation.data);

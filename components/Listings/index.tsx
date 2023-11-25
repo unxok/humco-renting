@@ -1,46 +1,81 @@
-import getListings from "@/app/actions/getListings";
 import sbServer from "@/utils/supabase/SupabaseClients/sbServer";
-import { Suspense } from "react";
 
-export const Listings = async () => {
+import { PmHeader } from "./PmHeader";
+import { Thumbnail } from "./Thumbnail";
+import { CardContent } from "./CardContent";
+import { Footer } from "./Footer/footer";
+
+export const Listings = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: any };
+}) => {
+  const orderBy = {
+    col: searchParams.sortby ? searchParams.sortby : "rent",
+    asc: searchParams.asc === "true" ? true : false,
+  };
+
   const db = sbServer();
-  const {
-    data: { user },
-  } = await db.auth.getUser();
 
-  const { data, error } = await db.from("listings").select("*");
+  const { data, error } = await db
+    .from("listings")
+    .select("*")
+    .order(orderBy.col, {
+      ascending: orderBy.asc,
+    });
+
+  const propertyManagementsQuery = await db
+    .from("property-managements")
+    .select("id, name, logo_url");
+  const propertyManagements = propertyManagementsQuery.data
+    ? propertyManagementsQuery.data
+    : [];
+  const pmMap: { [key: number]: any } = propertyManagements.reduce(
+    (map, pm) => {
+      return {
+        ...map,
+        [pm.id]: { name: pm.name, logo: pm.logo_url },
+      };
+    },
+    {}
+  );
+
+  const numberFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+  });
 
   return (
-    <div className='flex flex-col items-center justify-center gap-5 p-5 '>
+    <div className='w-full sm:w-[80%] lg:w-2/3'>
       All Listings
-      {data &&
-        data.map((l, i) => (
-          <div key={l.id + i} className='border rounded-md p-5 w-full bg-white'>
-            <img
-              src={l.thumbnail_url ? l.thumbnail_url : ""}
-              alt='Listing Photo'
-              className='w-80 h-80 self-center'
-            />
-            <p>Address: {l.full_address}</p>
-            <p>Posted: {l.listed_at}</p>
-            <p>{l.property_management_id}</p>
-            <p>Description: {l.description}</p>
-            <p>Rent: {l.rent}</p>
-            <p>Type: {l.building_type}</p>
+      <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3'>
+        {data &&
+          data.map((l, i) => (
+            <div
+              key={i}
+              className='border h-[55vh] relative rounded-md w-full bg-white  text-center'
+            >
+              <PmHeader
+                pmName={pmMap[l.property_management_id as number].name}
+              />
+              <Thumbnail l={l} pmMap={pmMap} />
+              <div className='flex flex-col h-[40%] justify-between'>
+                <CardContent l={l} numberFormatter={numberFormatter} />
+                <Footer likes={l.likes} />
+              </div>
+              {/* <p>Type: {l.building_type}</p>
             <p>Square Feet: {l.square_feet}</p>
             <p>Security Deposit: {l.security_deposit}</p>
             <p>
-              Available Date: {l.available_date ? l.available_date : "unknown"}
+            Available Date: {l.available_date ? l.available_date : "unknown"}
             </p>
             <p>Lease Length: {l.lease_length}</p>
             <p>Application Fee: {l.application_fee}</p>
-            <p>Bedrooms: {l.bedrooms}</p>
-            <p>Bathrooms: {l.bathrooms}</p>
-            <p>Cats: {l.cats_allowed}</p>
-            <p>Dogs: {l.dogs_allowed}</p>
-            <p>Amenities: {l.amenities}</p>
-          </div>
-        ))}
+        <p>Amenities: {l.amenities}</p> */}
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
