@@ -37,11 +37,9 @@ export default async function RootLayout({
   return (
     <html lang='en' className={GeistSans.className}>
       <body className='bg-background text-foreground'>
-        <main className='min-h-screen flex flex-col items-center'>
+        <main className='min-h-screen relative'>
           <NavBar user={user}></NavBar>
-          <div className='z-[99998] bg-accent flex flex-col justify-center items-center'>
-            {children}
-          </div>
+          {children}
         </main>
       </body>
     </html>
