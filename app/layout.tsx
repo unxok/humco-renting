@@ -35,8 +35,8 @@ export default async function RootLayout({
   } = await db.auth.getUser();
 
   return (
-    <html lang='en' className={GeistSans.className}>
-      <body className='bg-background text-foreground'>
+    <html lang='en' className={GeistSans.className + "customScrollbar"}>
+      <body className='bg-background text-foreground overflow-x-hidden'>
         <main className='min-h-screen relative'>
           <NavBar user={user}></NavBar>
           {children}

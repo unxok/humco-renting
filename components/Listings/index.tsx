@@ -25,7 +25,7 @@ export const Listings = async ({
     });
 
   const propertyManagementsQuery = await db
-    .from("property-managements")
+    .from("property_managements")
     .select("id, name, logo_url");
   const propertyManagements = propertyManagementsQuery.data
     ? propertyManagementsQuery.data

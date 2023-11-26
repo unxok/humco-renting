@@ -5,8 +5,9 @@ import RightArrow from "@/app/resources/svg/RightArrow.svg";
 import LeftArrow from "@/app/resources/svg/LeftArrow.svg";
 import X from "@/app/resources/svg/X.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ImageCarouselProps = {
   listingId: number;
@@ -14,22 +15,38 @@ type ImageCarouselProps = {
   startIndex?: number | null;
 };
 
-export const ImageCarousel = ({
-  listingId,
-  images,
-  startIndex,
-}: ImageCarouselProps) => {
+export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
     watchDrag: false,
-    startIndex: startIndex || 0,
+    startIndex: Number(searchParams.get("index")) || 0,
   });
   const [currentSlide, setCurrentSlide] = useState({
     max: images ? images.length - 1 : 0,
     min: 0,
-    current: 0,
+    current: Number(searchParams.get("index")) || 0,
   });
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("index", currentSlide.current.toString());
+    window.history.pushState({}, "", url);
+  }, [currentSlide]);
+
+  useEffect(() => {
+    window.addEventListener(
+      "keyup",
+      (e) => {
+        if (e.key === "Escape") {
+          router.push(`/listings/${listingId}`);
+        }
+      },
+      { once: true }
+    );
+  }, []);
 
   const slideNext = () => {
     emblaApi?.scrollNext();

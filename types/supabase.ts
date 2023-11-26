@@ -68,6 +68,8 @@ export interface Database {
           lease_length: string | null
           likes: number
           listed_at: string | null
+          long_description: string | null
+          page_url: string | null
           picture_urls: string[] | null
           pm_id: number | null
           pm_id_plus_pmListingId: string
@@ -100,6 +102,8 @@ export interface Database {
           lease_length?: string | null
           likes?: number
           listed_at?: string | null
+          long_description?: string | null
+          page_url?: string | null
           picture_urls?: string[] | null
           pm_id?: number | null
           pm_id_plus_pmListingId: string
@@ -132,6 +136,8 @@ export interface Database {
           lease_length?: string | null
           likes?: number
           listed_at?: string | null
+          long_description?: string | null
+          page_url?: string | null
           picture_urls?: string[] | null
           pm_id?: number | null
           pm_id_plus_pmListingId?: string
@@ -147,7 +153,7 @@ export interface Database {
             foreignKeyName: "listings_property_management_id_fkey"
             columns: ["property_management_id"]
             isOneToOne: false
-            referencedRelation: "property-managements"
+            referencedRelation: "property_managements"
             referencedColumns: ["id"]
           }
         ]
@@ -190,22 +196,25 @@ export interface Database {
           }
         ]
       }
-      "property-managements": {
+      property_managements: {
         Row: {
           created_at: string
           id: number
+          individual_listing_url: string
           logo_url: string | null
           name: string
         }
         Insert: {
           created_at?: string
           id?: number
+          individual_listing_url?: string
           logo_url?: string | null
           name: string
         }
         Update: {
           created_at?: string
           id?: number
+          individual_listing_url?: string
           logo_url?: string | null
           name?: string
         }

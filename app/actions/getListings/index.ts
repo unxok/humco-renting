@@ -14,7 +14,7 @@ const getListings = async () => {
   >[] = [];
 
   const propertyManagementsQuery = await db
-    .from("property-managements")
+    .from("property_managements")
     .select("id, name");
   const propertyManagements = propertyManagementsQuery.data
     ? propertyManagementsQuery.data
@@ -40,45 +40,56 @@ const getListings = async () => {
       // console.log(json);
       if (json.name) {
         console.log("made it through");
-        json.values.forEach(({ data }: { data: ListingHPM }) => {
-          listingsToInsert.push({
-            address_city: data.address_city,
-            address_state: data.address_state,
-            address_street1: data.address_address1,
-            address_street2: data.address_address2,
-            address_zip: data.address_postal_code,
-            amenities: data.amenities,
-            application_fee: data.application_fee,
-            available_date: data.available_date,
-            bathrooms: data.bathrooms,
-            bedrooms: data.bedrooms,
-            building_type: data.property_type,
-            cats_allowed: data.cats.includes("not")
-              ? false
-              : data.cats.includes("unspecified")
-              ? null
-              : true,
-            description: data.marketing_title,
-            dogs_allowed: data.dogs.includes("not")
-              ? false
-              : data.cats.includes("unspecified")
-              ? null
-              : true,
-            full_address: data.full_address,
-            lease_length: data.advertised_lease_term,
-            is_listed: true,
-            listed_at: data.posted_to_website_at,
-            picture_urls: data.photos.map(({ url }: { url: string }) => url),
-            pm_id: data.id,
-            pm_id_plus_pmListingId: data.id + data.listable_uid,
-            property_management_id: pmMap[data.portfolio_name],
-            rent: data.market_rent,
-            scraped_at: new Date().toISOString().toString(),
-            security_deposit: data.deposit,
-            square_feet: data.square_feet,
-            thumbnail_url: data.photos[0] ? data.photos[0].url : "",
-          });
-        });
+        console.log(json.values[0]);
+        json.values.forEach(
+          ({
+            data,
+            page_item_url,
+          }: {
+            data: ListingHPM;
+            page_item_url: string;
+          }) => {
+            listingsToInsert.push({
+              address_city: data.address_city,
+              address_state: data.address_state,
+              address_street1: data.address_address1,
+              address_street2: data.address_address2,
+              address_zip: data.address_postal_code,
+              amenities: data.amenities,
+              application_fee: data.application_fee,
+              available_date: data.available_date,
+              bathrooms: data.bathrooms,
+              bedrooms: data.bedrooms,
+              building_type: data.property_type,
+              cats_allowed: data.cats.includes("not")
+                ? false
+                : data.cats.includes("unspecified")
+                ? null
+                : true,
+              description: data.marketing_title,
+              dogs_allowed: data.dogs.includes("not")
+                ? false
+                : data.cats.includes("unspecified")
+                ? null
+                : true,
+              full_address: data.full_address,
+              lease_length: data.advertised_lease_term,
+              long_description: data.marketing_description,
+              is_listed: true,
+              listed_at: data.posted_to_website_at,
+              page_url: page_item_url,
+              picture_urls: data.photos.map(({ url }: { url: string }) => url),
+              pm_id: data.id,
+              pm_id_plus_pmListingId: data.id + data.listable_uid,
+              property_management_id: pmMap[data.portfolio_name],
+              rent: data.market_rent,
+              scraped_at: new Date().toISOString().toString(),
+              security_deposit: data.deposit,
+              square_feet: data.square_feet,
+              thumbnail_url: data.photos[0] ? data.photos[0].url : "",
+            });
+          }
+        );
 
         // 'unlist' all listings
         const unlistAllQuery = await db

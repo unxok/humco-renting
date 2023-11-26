@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Index() {
   return (
-    <div className='fixed inset-0 flex justify-center items-center flex-col gap-5'>
+    <div className='fixed inset-20 flex justify-center items-center flex-col gap-5'>
       <RefreshListingsButton />
       <div>
         <Link

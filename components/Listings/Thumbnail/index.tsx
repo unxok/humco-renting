@@ -23,7 +23,7 @@ export const Thumbnail = ({ l, pmMap }: { l: Listing; pmMap: PmMap }) => (
       className='absolute bottom-0 right-0'
     />
     <Link
-      scroll={false}
+      scroll={true}
       href={`listings/${l.id}`}
       className='hover:underline hover:underline-offset-1 absolute bottom-0 left-0 w-2/3 text-shadow shadow-black text-white'
     >{`${l.address_street1}, ${l.address_city}, CA ${l.address_zip}`}</Link>
