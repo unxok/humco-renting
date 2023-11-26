@@ -10,7 +10,7 @@ const getListings = async () => {
 
   const listingsToInsert: Omit<
     Database["public"]["Tables"]["listings"]["Row"],
-    "id" | "admin_hidden" | "likes"
+    "id" | "admin_hidden" | "likes" | "first_scraped_at"
   >[] = [];
 
   const propertyManagementsQuery = await db

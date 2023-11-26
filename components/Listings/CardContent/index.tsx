@@ -11,7 +11,7 @@ type CardContentProps = {
 };
 
 export const CardContent = ({ l, numberFormatter }: CardContentProps) => (
-  <div className='flex flex-col gap-1'>
+  <div className='flex flex-col gap-1 text-black'>
     <p className='text-sm'>{l.description}</p>
     <div className='text-primary text-3xl font-extrabold flex flex-row items-center justify-center gap-3'>
       {numberFormatter.format(l.rent as number)}

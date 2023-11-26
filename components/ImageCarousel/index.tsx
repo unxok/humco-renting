@@ -10,9 +10,8 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ImageCarouselProps = {
-  listingId: number;
+  listingId?: number;
   images?: string[] | null;
-  startIndex?: number | null;
 };
 
 export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
@@ -36,17 +35,25 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
     window.history.pushState({}, "", url);
   }, [currentSlide]);
 
-  useEffect(() => {
-    window.addEventListener(
-      "keyup",
-      (e) => {
-        if (e.key === "Escape") {
-          router.push(`/listings/${listingId}`);
-        }
-      },
-      { once: true }
-    );
-  }, []);
+  const keyEventFunc = (e: KeyboardEvent) => {
+    const url = searchParams.get("listingsMode")
+      ? "/listings"
+      : `listings/${listingId}`;
+    if (e.key === "Escape") {
+      router.push(url);
+      return;
+    }
+    if (e.key === "ArrowRight" || e.key === "d") {
+      slideNext();
+      console.log("arrow right");
+      return;
+    }
+    if (e.key === "ArrowLeft" || e.key === "a") {
+      slidePrev();
+      console.log("arrow right");
+      return;
+    }
+  };
 
   const slideNext = () => {
     emblaApi?.scrollNext();
@@ -67,6 +74,16 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
       return { ...prev, current: prev.current - 1 };
     });
   };
+
+  useEffect(() => {
+    document.addEventListener("keyup", keyEventFunc);
+
+    return () => {
+      document.removeEventListener("keyup", keyEventFunc);
+    };
+  }, [emblaApi, slideNext, slidePrev]);
+
+  const backToListing = searchParams.get("listingsMode") ? true : false;
 
   return (
     <div className='bg-black fixed inset-0'>
@@ -104,7 +121,7 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
           width={50}
           height={50}
         />
-        <Link href={`/listings/${listingId}`}>
+        <Link href={backToListing ? `/listings` : `/listings/${listingId}`}>
           <Image
             src={X}
             alt='Close Pictures'

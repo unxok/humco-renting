@@ -10,11 +10,13 @@ type PmMap = {
 
 export const Thumbnail = ({ l, pmMap }: { l: Listing; pmMap: PmMap }) => (
   <div className='w-full h-1/2 border relative'>
-    <img
-      src={l.thumbnail_url ? l.thumbnail_url : ""}
-      alt='Listing Photo'
-      className='w-full h-full self-center'
-    />
+    <Link href={`/listings/${l.id}?pictures=true&listingsMode=true`}>
+      <img
+        src={l.thumbnail_url ? l.thumbnail_url : ""}
+        alt='Listing Photo'
+        className='w-full h-full self-center'
+      />
+    </Link>
     <Image
       width={100}
       height={100}

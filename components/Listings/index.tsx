@@ -26,7 +26,7 @@ export const Listings = async ({
 
   const propertyManagementsQuery = await db
     .from("property_managements")
-    .select("id, name, logo_url");
+    .select("id, name, logo_url, brand_color");
   const propertyManagements = propertyManagementsQuery.data
     ? propertyManagementsQuery.data
     : [];
@@ -34,7 +34,11 @@ export const Listings = async ({
     (map, pm) => {
       return {
         ...map,
-        [pm.id]: { name: pm.name, logo: pm.logo_url },
+        [pm.id]: {
+          name: pm.name,
+          logo: pm.logo_url,
+          brand_color: pm.brand_color,
+        },
       };
     },
     {}
@@ -47,20 +51,24 @@ export const Listings = async ({
   });
 
   return (
-    <div className='w-full sm:w-[80%] lg:w-2/3'>
+    <div className='w-full p-10 bg-slate-800'>
       All Listings
-      <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3'>
         {data &&
           data.map((l, i) => (
             <div
               key={i}
-              className='border h-[55vh] relative rounded-md w-full bg-white  text-center'
+              className={`border h-[55vh] relative rounded-md rounded-t-3xl w-full text-center text-white`}
+              style={{
+                backgroundColor:
+                  pmMap[l.property_management_id as number].brand_color,
+              }}
             >
               <PmHeader
                 pmName={pmMap[l.property_management_id as number].name}
               />
               <Thumbnail l={l} pmMap={pmMap} />
-              <div className='flex flex-col h-[40%] justify-between'>
+              <div className='flex flex-col h-[40%] justify-between bg-white'>
                 <CardContent l={l} numberFormatter={numberFormatter} />
                 <Footer likes={l.likes} />
               </div>

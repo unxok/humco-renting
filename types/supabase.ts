@@ -62,6 +62,7 @@ export interface Database {
           cats_allowed: boolean | null
           description: string | null
           dogs_allowed: boolean | null
+          first_scraped_at: string
           full_address: string | null
           id: number
           is_listed: boolean
@@ -96,6 +97,7 @@ export interface Database {
           cats_allowed?: boolean | null
           description?: string | null
           dogs_allowed?: boolean | null
+          first_scraped_at?: string
           full_address?: string | null
           id?: number
           is_listed?: boolean
@@ -130,6 +132,7 @@ export interface Database {
           cats_allowed?: boolean | null
           description?: string | null
           dogs_allowed?: boolean | null
+          first_scraped_at?: string
           full_address?: string | null
           id?: number
           is_listed?: boolean
@@ -198,6 +201,7 @@ export interface Database {
       }
       property_managements: {
         Row: {
+          brand_color: string
           created_at: string
           id: number
           individual_listing_url: string
@@ -205,6 +209,7 @@ export interface Database {
           name: string
         }
         Insert: {
+          brand_color?: string
           created_at?: string
           id?: number
           individual_listing_url?: string
@@ -212,6 +217,7 @@ export interface Database {
           name: string
         }
         Update: {
+          brand_color?: string
           created_at?: string
           id?: number
           individual_listing_url?: string
