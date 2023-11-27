@@ -9,25 +9,27 @@ type PmMap = {
 };
 
 export const Thumbnail = ({ l, pmMap }: { l: Listing; pmMap: PmMap }) => (
-  <div className='w-full h-1/2 border relative'>
+  <div className="w-full h-1/2 border relative">
     <Link href={`/listings/${l.id}?pictures=true&listingsMode=true`}>
       <img
         src={l.thumbnail_url ? l.thumbnail_url : ""}
-        alt='Listing Photo'
-        className='w-full h-full self-center'
+        alt="Listing Photo"
+        className="w-full h-full self-center"
       />
     </Link>
     <Image
+      fetchPriority="high"
+      loading="eager"
       width={100}
       height={100}
       alt={pmMap[l.property_management_id as number]}
       src={pmMap[l.property_management_id as number]["logo"]}
-      className='absolute bottom-0 right-0'
+      className="absolute bottom-0 right-0"
     />
     <Link
       scroll={true}
       href={`listings/${l.id}`}
-      className='hover:underline hover:underline-offset-1 absolute bottom-0 left-0 w-2/3 text-shadow shadow-black text-white'
+      className="hover:underline hover:underline-offset-1 absolute bottom-0 left-0 w-2/3 text-shadow shadow-black text-white"
     >{`${l.address_street1}, ${l.address_city}, CA ${l.address_zip}`}</Link>
   </div>
 );

@@ -207,6 +207,7 @@ export interface Database {
           individual_listing_url: string
           logo_url: string | null
           name: string
+          portfolio_name: string
         }
         Insert: {
           brand_color?: string
@@ -215,6 +216,7 @@ export interface Database {
           individual_listing_url?: string
           logo_url?: string | null
           name: string
+          portfolio_name?: string
         }
         Update: {
           brand_color?: string
@@ -223,6 +225,7 @@ export interface Database {
           individual_listing_url?: string
           logo_url?: string | null
           name?: string
+          portfolio_name?: string
         }
         Relationships: []
       }

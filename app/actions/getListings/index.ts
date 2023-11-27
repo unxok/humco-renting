@@ -15,7 +15,7 @@ const getListings = async () => {
 
   const propertyManagementsQuery = await db
     .from("property_managements")
-    .select("id, name");
+    .select("id, name, portfolio_name");
   const propertyManagements = propertyManagementsQuery.data
     ? propertyManagementsQuery.data
     : [];
@@ -23,10 +23,10 @@ const getListings = async () => {
     (map, pm) => {
       return {
         ...map,
-        [pm.name]: pm.id,
+        [pm.portfolio_name]: pm.id,
       };
     },
-    {}
+    {},
   );
   console.log("pmMap", pmMap);
 
@@ -39,8 +39,7 @@ const getListings = async () => {
 
       // console.log(json);
       if (json.name) {
-        console.log("made it through");
-        console.log(json.values[0]);
+        // console.log(json.values[0]);
         json.values.forEach(
           ({
             data,
@@ -64,14 +63,14 @@ const getListings = async () => {
               cats_allowed: data.cats.includes("not")
                 ? false
                 : data.cats.includes("unspecified")
-                ? null
-                : true,
+                  ? null
+                  : true,
               description: data.marketing_title,
               dogs_allowed: data.dogs.includes("not")
                 ? false
                 : data.cats.includes("unspecified")
-                ? null
-                : true,
+                  ? null
+                  : true,
               full_address: data.full_address,
               lease_length: data.advertised_lease_term,
               long_description: data.marketing_description,
@@ -88,7 +87,7 @@ const getListings = async () => {
               square_feet: data.square_feet,
               thumbnail_url: data.photos[0] ? data.photos[0].url : "",
             });
-          }
+          },
         );
 
         // 'unlist' all listings
@@ -114,6 +113,15 @@ const getListings = async () => {
 
   console.log("scraping started");
   await page.goto("https://www.humboldtrentals.com/vacancies", {
+    waitUntil: "networkidle0",
+  });
+  await page.goto("https://www.rentor.com/availability", {
+    waitUntil: "networkidle0",
+  });
+  await page.goto("https://www.imsrentals.com/vacancies", {
+    waitUntil: "networkidle0",
+  });
+  await page.goto("https://www.wolfepropertymanagement.com/availability", {
     waitUntil: "networkidle0",
   });
 

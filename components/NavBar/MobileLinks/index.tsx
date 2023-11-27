@@ -8,14 +8,14 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import Hamburger from "@/app/resources/svg/Hamburger.svg";
+import { Hamburger } from "@/app/resources/svg/Hamburger";
 import Image from "next/image";
 
 export const MobileLinks = () => {
   return (
     <Sheet>
       <SheetTrigger>
-        <Image alt='Links' src={Hamburger} height={20} width={20} />
+        <Hamburger fill="hsl(var(--foreground))" w={20} h={20} />
       </SheetTrigger>
       <SheetContent side={"left"}>
         <SheetHeader>

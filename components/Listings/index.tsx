@@ -3,7 +3,7 @@ import sbServer from "@/utils/supabase/SupabaseClients/sbServer";
 import { PmHeader } from "./PmHeader";
 import { Thumbnail } from "./Thumbnail";
 import { CardContent } from "./CardContent";
-import { Footer } from "./Footer/footer";
+import { SocialBar } from "./SocialBar";
 
 export const Listings = async ({
   searchParams,
@@ -41,7 +41,7 @@ export const Listings = async ({
         },
       };
     },
-    {}
+    {},
   );
 
   const numberFormatter = new Intl.NumberFormat("en-US", {
@@ -51,39 +51,26 @@ export const Listings = async ({
   });
 
   return (
-    <div className='w-full p-10 bg-slate-800'>
-      All Listings
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3'>
-        {data &&
-          data.map((l, i) => (
-            <div
-              key={i}
-              className={`border h-[55vh] relative rounded-md rounded-t-3xl w-full text-center text-white`}
-              style={{
-                backgroundColor:
-                  pmMap[l.property_management_id as number].brand_color,
-              }}
-            >
-              <PmHeader
-                pmName={pmMap[l.property_management_id as number].name}
-              />
-              <Thumbnail l={l} pmMap={pmMap} />
-              <div className='flex flex-col h-[40%] justify-between bg-white'>
-                <CardContent l={l} numberFormatter={numberFormatter} />
-                <Footer likes={l.likes} />
-              </div>
-              {/* <p>Type: {l.building_type}</p>
-            <p>Square Feet: {l.square_feet}</p>
-            <p>Security Deposit: {l.security_deposit}</p>
-            <p>
-            Available Date: {l.available_date ? l.available_date : "unknown"}
-            </p>
-            <p>Lease Length: {l.lease_length}</p>
-            <p>Application Fee: {l.application_fee}</p>
-        <p>Amenities: {l.amenities}</p> */}
+    // TODO fade in isn't working and idk why
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 bg-transparent">
+      {data &&
+        data.map((l, i) => (
+          <div
+            key={i}
+            className={`border relative rounded-b-md rounded-t-lg w-full text-center animate-fade-in`}
+            style={{
+              backgroundColor:
+                pmMap[l.property_management_id as number].brand_color,
+            }}
+          >
+            <PmHeader pmName={pmMap[l.property_management_id as number].name} />
+            <Thumbnail l={l} pmMap={pmMap} />
+            <div className="flex flex-col h-[40%] justify-between bg-secondary ">
+              <CardContent l={l} numberFormatter={numberFormatter} />
+              <SocialBar likes={l.likes} />
             </div>
-          ))}
-      </div>
+          </div>
+        ))}
     </div>
   );
 };

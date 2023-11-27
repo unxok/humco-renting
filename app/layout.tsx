@@ -5,6 +5,8 @@ import AuthButton from "@/components/NavBar/AuthButton";
 import sbServer from "@/utils/supabase/SupabaseClients/sbServer";
 import { NavBar } from "@/components/NavBar";
 import { ReactNode } from "react";
+import { cookies } from "next/headers";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "HumCoRenting",
@@ -33,14 +35,22 @@ export default async function RootLayout({
   const {
     data: { user },
   } = await db.auth.getUser();
+  const theme = cookies().get("theme");
 
   return (
-    <html lang='en' className={GeistSans.className + "customScrollbar"}>
-      <body className='bg-background text-foreground overflow-x-hidden'>
-        <main className='min-h-screen relative'>
+    <html lang="en" className={GeistSans.className}>
+      <body
+        className={
+          `bg-background text-foreground overflow-x-hidden` + theme
+            ? theme?.value
+            : "light"
+        }
+      >
+        <main className="min-h-screen relative flex justify-start flex-col items-center">
           <NavBar user={user}></NavBar>
           {children}
         </main>
+        <Toaster />
       </body>
     </html>
   );

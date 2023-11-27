@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { hostname: "irp-cdn.multiscreensite.com" },
+      { hostname: "lirp.cdn-website.com" },
       { hostname: "images.cdn.appfolio.com" },
     ],
   },

@@ -1,13 +1,13 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import RightArrow from "@/app/resources/svg/RightArrow.svg";
-import LeftArrow from "@/app/resources/svg/LeftArrow.svg";
-import X from "@/app/resources/svg/X.svg";
+import { RightArrow } from "@/app/resources/svg/RightArrow";
+import { LeftArrow } from "@/app/resources/svg/LeftArrow";
+import { X } from "@/app/resources/svg/X";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type ImageCarouselProps = {
   listingId?: number;
@@ -86,17 +86,17 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
   const backToListing = searchParams.get("listingsMode") ? true : false;
 
   return (
-    <div className='bg-black fixed inset-0'>
+    <div className="bg-black fixed inset-0">
       <div
-        className='border flex border-primary w-full h-full p-0 overflow-hidden'
+        className="border flex border-primary w-full h-full p-0 overflow-hidden"
         ref={emblaRef}
       >
-        <div className='flex'>
+        <div className="flex">
           {images?.map((url, i) => (
-            <div key={url + i} className='flex-0 min-w-0 relative'>
+            <div key={url + i} className="flex-0 min-w-0 relative">
               <img
-                loading='lazy'
-                className='block max-h-full my-0 mx-auto'
+                loading="lazy"
+                className="block max-h-full my-0 mx-auto"
                 src={url}
                 alt={`Picture Number ${i}`}
                 // width={200}
@@ -105,33 +105,26 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
             </div>
           ))}
         </div>
-        <Image
-          src={RightArrow}
-          alt='Next Image'
+        <div
           onClick={() => slideNext()}
-          className='absolute top-1/2 -translate-y-1/2 right-1 hover:cursor-pointer'
-          width={50}
-          height={50}
-        />
-        <Image
-          src={LeftArrow}
-          alt='Previous Image'
+          className="absolute top-1/2 -translate-y-1/2 right-1 hover:cursor-pointer bg-black rounded-full p-2"
+        >
+          <RightArrow fill="white" w={50} h={50} />
+        </div>
+        <div
           onClick={() => slidePrev()}
-          className='absolute top-1/2 -translate-y-1/2 left-1 hover:cursor-pointer'
-          width={50}
-          height={50}
-        />
-        <Link href={backToListing ? `/listings` : `/listings/${listingId}`}>
-          <Image
-            src={X}
-            alt='Close Pictures'
-            className='absolute top-2 right-2'
-            width={50}
-            height={50}
-          />
+          className="absolute top-1/2 -translate-y-1/2 left-1 hover:cursor-pointer bg-black rounded-full p-2"
+        >
+          <LeftArrow fill="white" w={50} h={50} />
+        </div>
+        <Link
+          className="absolute top-2 right-2 bg-black rounded-full p-2"
+          href={backToListing ? `/listings` : `/listings/${listingId}`}
+        >
+          <X fill="white" w={30} h={30} />
         </Link>
 
-        <div className='absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-row items-center justify-center gap-3'>
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-row items-center justify-center gap-3">
           {images?.map((url, i) => (
             <div
               key={"dot" + i}
