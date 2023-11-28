@@ -1,27 +1,40 @@
 # HumCo Renting
 
-A project to display all rentals in Humboldt County
+A project to display all rentals in Humboldt County.
 
-## To Do
+## Roadmap
 
-- [x] Sign up and Login in
-- [ ] Account preferences and log out
-- [?] web scraper
-- [ ] ...more
+These are all the features currently planned and when they will be implemented
 
-### Each Listing
+### Alpha
 
-- rent
-- application fee
-- security deposit
-- cats allowed?
-- dogs allowed?
-- amenities
-- utilities
-- address
-  - street, city, state, zip
-- bedrooms
-- bathrooms
-- sq ft
-- lease length
-- available date
+- [ ] Show listings from all appfolio property managements
+- [ ] Search filters
+- [ ] Landing page
+  - [ ] Average Rents
+  - [ ] Supported and supported property managements
+  - [ ] total listings
+
+## Beta
+
+- [ ] Share posts
+- [ ] Like property managements
+- [ ] Like posts
+- [ ] Comment on property managements
+- [ ] Comment on posts
+  - [ ] with property management comments alongside
+- [ ] Landing Page updates
+  - [ ] Property management rankings
+
+## V1
+
+- [ ] Email/Text notifications
+
+## V2 - The PM/Landlord Update
+
+- [ ] Property managements can create verified accounts
+  - [ ] monthly premium
+  - [ ] sponsor badge
+  - [ ] favor in listing algorithm
+  - [ ] comment on listings (any?)
+  - [ ] respond to PM comments (just themselves)
