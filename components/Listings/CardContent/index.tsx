@@ -16,8 +16,20 @@ export const CardContent = ({ l, numberFormatter }: CardContentProps) => (
     <div className="text-primary text-3xl font-extrabold flex flex-row items-center justify-center gap-3">
       {numberFormatter.format(l.rent as number)}
       <div className="flex flex-row items-center justify-center">
-        {l.cats_allowed && <Cat fill="hsl(var(--foreground))" w={30} h={30} />}
-        {l.dogs_allowed && <Dog fill="hsl(var(--foreground))" w={30} h={30} />}
+        <Cat
+          fill={
+            l.cats_allowed ? `hsl(var(--primary))` : `hsl(var(--destructive))`
+          }
+          w={30}
+          h={30}
+        />
+        <Dog
+          fill={
+            l.dogs_allowed ? `hsl(var(--primary))` : `hsl(var(--destructive))`
+          }
+          w={30}
+          h={30}
+        />
       </div>
     </div>
     <div className="flex flex-row justify-center items-center gap-2">

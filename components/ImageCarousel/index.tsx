@@ -95,7 +95,7 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
           {images?.map((url, i) => (
             <div key={url + i} className="flex-0 min-w-0 relative">
               <img
-                loading="lazy"
+                loading="eager"
                 className="block max-h-full my-0 mx-auto"
                 src={url}
                 alt={`Picture Number ${i}`}
@@ -107,24 +107,24 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
         </div>
         <div
           onClick={() => slideNext()}
-          className="absolute top-1/2 -translate-y-1/2 right-1 hover:cursor-pointer bg-black rounded-full p-2"
+          className="absolute top-1/2 -translate-y-1/2 right-1 hover:cursor-pointer rounded-full p-2"
         >
           <RightArrow fill="white" w={50} h={50} />
         </div>
         <div
           onClick={() => slidePrev()}
-          className="absolute top-1/2 -translate-y-1/2 left-1 hover:cursor-pointer bg-black rounded-full p-2"
+          className="absolute top-1/2 -translate-y-1/2 left-1 hover:cursor-pointer rounded-full p-2"
         >
           <LeftArrow fill="white" w={50} h={50} />
         </div>
         <Link
-          className="absolute top-2 right-2 bg-black rounded-full p-2"
+          className="absolute top-2 right-2 rounded-full p-2"
           href={backToListing ? `/listings` : `/listings/${listingId}`}
         >
           <X fill="white" w={30} h={30} />
         </Link>
 
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-row items-center justify-center gap-3">
+        <div className="absolute bottom-5 left-1/2 gap-y-1 -translate-x-1/2 flex flex-row flex-wrap w-full justify-center gap-2 p-2">
           {images?.map((url, i) => (
             <div
               key={"dot" + i}

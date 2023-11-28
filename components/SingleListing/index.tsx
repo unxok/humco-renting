@@ -5,6 +5,8 @@ import { SocialBar } from "../Listings/SocialBar";
 import { ImageBanner } from "./ImageBanner";
 import { ListingHeader, ListingHeaderProps } from "./ListingHeader";
 import { ListingAccordion } from "./ListingAccordion";
+import { Suspense } from "react";
+import { Loading } from "../Loading";
 
 export const SingleListing = async ({
   listingId,
@@ -24,7 +26,9 @@ export const SingleListing = async ({
   // console.log("any errors in getting listing?", error);
   if (searchParams.hasOwnProperty("pictures")) {
     return (
-      <ImageCarousel listingId={listingId} images={data?.[0].picture_urls} />
+      <Suspense fallback={<Loading h={100} w={100} />}>
+        <ImageCarousel listingId={listingId} images={data?.[0].picture_urls} />
+      </Suspense>
     );
   }
 

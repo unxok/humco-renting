@@ -1,13 +1,22 @@
 export const Loading = ({
   w,
   h,
+  text,
+  fullscreen,
 }: {
   w: string | number;
   h: string | number;
+  text?: string;
+  fullscreen?: boolean;
 }) => {
   return (
-    <div className="inset-0 fixed flex flex-col gap-2 items-center justify-center">
-      Loading Listings
+    <div
+      className={
+        `flex flex-col gap-2 items-center justify-center` +
+        (fullscreen && `inset-0 fixed`)
+      }
+    >
+      {text}
       <div className="animate-spin transition-transform">
         <svg
           width={w || 15}

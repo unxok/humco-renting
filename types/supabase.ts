@@ -231,7 +231,12 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      listing_cities: {
+        Row: {
+          address_city: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

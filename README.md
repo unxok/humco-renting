@@ -17,18 +17,24 @@ These are all the features currently planned and when they will be implemented
 
 ## Beta
 
-- [ ] Share posts
+- [ ] Search for listings
+- [ ] Share listings
 - [ ] Like property managements
-- [ ] Like posts
+- [ ] Like listings
 - [ ] Comment on property managements
-- [ ] Comment on posts
+- [ ] Comment on listings
   - [ ] with property management comments alongside
 - [ ] Landing Page updates
   - [ ] Property management rankings
 
-## V1
+## V1 The Renters Update
 
-- [ ] Email/Text notifications
+- [ ] Email/Text notifications for
+  - [ ] New listings with specified details
+  - [ ] Replies to comments
+  - [ ] Comments on post commented on (if enabled)
+- [ ] Map view
+- [ ] Community Forum (idk maybe)
 
 ## V2 - The PM/Landlord Update
 
