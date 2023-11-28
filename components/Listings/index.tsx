@@ -52,12 +52,12 @@ export const Listings = async ({
 
   return (
     // TODO fade in isn't working and idk why
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 bg-transparent">
+    <div className="grid grid-cols-1 auto-rows-[450px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 bg-transparent">
       {data &&
         data.map((l, i) => (
           <div
             key={i}
-            className={`border relative rounded-b-md rounded-t-lg w-full text-center animate-fade-in`}
+            className={`border relative rounded-b-md rounded-t-lg text-center flex flex-col justify-end animate-fade-in`}
             style={{
               backgroundColor:
                 pmMap[l.property_management_id as number].brand_color,
@@ -65,7 +65,7 @@ export const Listings = async ({
           >
             <PmHeader pmName={pmMap[l.property_management_id as number].name} />
             <Thumbnail l={l} pmMap={pmMap} />
-            <div className="flex flex-col h-[40%] justify-between bg-secondary ">
+            <div className="flex flex-col justify-between bg-secondary ">
               <CardContent l={l} numberFormatter={numberFormatter} />
               <SocialBar likes={l.likes} />
             </div>

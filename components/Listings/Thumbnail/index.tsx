@@ -9,7 +9,7 @@ type PmMap = {
 };
 
 export const Thumbnail = ({ l, pmMap }: { l: Listing; pmMap: PmMap }) => (
-  <div className="w-full h-1/2 border relative">
+  <div className=" border h-1/2 relative">
     <Link href={`/listings/${l.id}?pictures=true&listingsMode=true`}>
       <img
         src={l.thumbnail_url ? l.thumbnail_url : ""}
