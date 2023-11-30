@@ -5,19 +5,6 @@ import { Thumbnail } from "./Thumbnail";
 import { CardContent } from "./CardContent";
 import { SocialBar } from "./SocialBar";
 
-type FilterSearchParams = {
-  city: string; // query all unique cities from listings
-  bedrooms: number;
-  bathrooms: number;
-  cats: boolean;
-  dogs: boolean;
-  square_feet: number;
-  security_deposit: number;
-  application_fee: number;
-  available_date: string; // really a Date though
-  building_type: string; // query all unique building_type from listings
-};
-
 export const Listings = async ({
   searchParams,
 }: {
@@ -30,6 +17,7 @@ export const Listings = async ({
 
   const db = sbServer();
 
+  // TODO just do a join instead of the pmMap thing???
   const { data, error } = await db
     .from("listings")
     .select("*")

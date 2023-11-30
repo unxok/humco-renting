@@ -22,7 +22,7 @@ export const RentSlider = ({
   );
 
   return (
-    <div className="flex flex-col items-center gap-3 justify-evenly">
+    <div className="flex flex-col gap-3">
       <Slider
         range={true}
         max={15000}

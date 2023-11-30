@@ -77,7 +77,7 @@ export const SearchFilters = ({
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-0">
                   <AccordionTrigger>Rent</AccordionTrigger>
-                  <AccordionContent className="flex flex-row pt-3">
+                  <AccordionContent className="flex flex-row pt-3 justify-center items-center">
                     <RentSlider
                       filters={filters.rentSlider}
                       filterSetter={setFilters}
