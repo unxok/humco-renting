@@ -4,26 +4,43 @@ import { PmHeader } from "./PmHeader";
 import { Thumbnail } from "./Thumbnail";
 import { CardContent } from "./CardContent";
 import { SocialBar } from "./SocialBar";
+import { FiltersState } from "@/app/listings/parseSearchParams";
 
 export const Listings = async ({
-  searchParams,
+  paramsState,
 }: {
-  searchParams: { [key: string]: any };
+  paramsState: FiltersState;
 }) => {
-  const orderBy = {
-    col: searchParams.sort ? searchParams.sort : "rent",
-    asc: searchParams.asc === "true" ? true : false,
-  };
+  const selectedCities = Object.keys(
+    paramsState.cities as NonNullable<FiltersState["cities"]>,
+  )
+    .map((key) => {
+      if (paramsState?.cities?.[key]) {
+        return key;
+      }
+    })
+    .filter((city) => city !== undefined);
 
   const db = sbServer();
-
   // TODO just do a join instead of the pmMap thing???
   const { data, error } = await db
     .from("listings")
     .select("*")
-    .order(orderBy.col, {
-      ascending: orderBy.asc,
-    });
+    .gte("rent", paramsState.rent[0])
+    .lte("rent", paramsState.rent[1])
+    .in("address_city", selectedCities)
+    .gte("bedrooms", paramsState.bedrooms.min)
+    .lte("bedrooms", paramsState.bedrooms.max)
+    .gte("bathrooms", paramsState.bathrooms.min)
+    .lte("bathrooms", paramsState.bathrooms.max)
+    .eq(
+      paramsState.pets.cats ? "cats_allowed" : "admin_hidden",
+      paramsState.pets.cats,
+    )
+    .eq(
+      paramsState.pets.dogs ? "dogs_allowed" : "admin_hidden",
+      paramsState.pets.dogs,
+    );
 
   const propertyManagementsQuery = await db
     .from("property_managements")

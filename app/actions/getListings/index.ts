@@ -28,7 +28,7 @@ const getListings = async () => {
     },
     {},
   );
-  console.log("pmMap", pmMap);
+  // console.log("pmMap", pmMap);
 
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
@@ -103,7 +103,7 @@ const getListings = async () => {
             onConflict: "pm_id_plus_pmListingId",
             ignoreDuplicates: false,
           });
-        console.log("upsert data", upsertOperation.data);
+        // console.log("upsert data", upsertOperation.data);
         console.log("Any errors in the upsert: ", upsertOperation.error);
       }
     } catch (e) {

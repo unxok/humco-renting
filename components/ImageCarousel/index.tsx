@@ -4,7 +4,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import { RightArrow } from "@/app/resources/svg/RightArrow";
 import { LeftArrow } from "@/app/resources/svg/LeftArrow";
 import { X } from "@/app/resources/svg/X";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -45,12 +44,10 @@ export const ImageCarousel = ({ listingId, images }: ImageCarouselProps) => {
     }
     if (e.key === "ArrowRight" || e.key === "d") {
       slideNext();
-      console.log("arrow right");
       return;
     }
     if (e.key === "ArrowLeft" || e.key === "a") {
       slidePrev();
-      console.log("arrow right");
       return;
     }
   };

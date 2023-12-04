@@ -3,14 +3,15 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@radix-ui/react-label";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Filters } from "..";
+import { AccordionWrapper } from "@/components/ui/accordionWrapper";
+import { FiltersState } from "@/app/listings/parseSearchParams";
 
 export const CitiesCheckBoxes = ({
   filters,
   filterSetter,
 }: {
-  filters: Filters["citiesCheckBoxes"];
-  filterSetter: Dispatch<SetStateAction<Filters>>;
+  filters: FiltersState["cities"];
+  filterSetter: Dispatch<SetStateAction<FiltersState>>;
 }) => {
   const [selectedCities, setSelectedCities] = useState(filters);
   const [isAllSelected, setAllSelected] = useState(false);
@@ -39,38 +40,53 @@ export const CitiesCheckBoxes = ({
     if (checkIfAllSelected()) setAllSelected(true);
     if (!checkIfAllSelected()) setAllSelected(false);
     filterSetter((prev) => {
-      return { ...prev, citiesCheckBoxes: selectedCities };
+      return { ...prev, cities: selectedCities };
     });
   }, [selectedCities]);
   return (
-    <>
+    <AccordionWrapper
+      className="flex flex-row flex-wrap gap-3"
+      value="cities"
+      triggerText="Cities"
+    >
       <div className="flex flex-row gap-1">
         <Checkbox
           checked={isAllSelected}
-          onCheckedChange={(bool) => updateAllCities(!!bool.valueOf())}
+          onCheckedChange={(boolish) => updateAllCities(!!boolish.valueOf())}
           name={`checkbox-selectAll`}
+          id="checkbox-selectAll"
+        ></Checkbox>
+        <Label
+          className="hover:cursor-pointer hover:text-primary"
+          htmlFor={`checkbox-selectAll`}
         >
-          <Label htmlFor={`checkbox-selectAll`}>Select All</Label>
-        </Checkbox>
+          <span className="text-primary">Select All</span>
+        </Label>
       </div>
       {Object.keys(filters as {}).map((c, i) => (
         <div className="flex flex-row gap-1" key={c}>
           <Checkbox
-            //@ts-expect-error TODO fix this
+            // @ts-ignore TODO fix this
             checked={selectedCities[c]}
-            onCheckedChange={(bool) =>
+            onCheckedChange={(boolish) =>
               setSelectedCities((prev) => {
                 return {
                   ...prev,
-                  [`${c}`]: !!bool.valueOf(),
+                  [`${c}`]: !!boolish.valueOf(),
                 };
               })
             }
             name={`checkbox-${i}`}
+            id={`checkbox-${i}`}
           />
-          <Label htmlFor={`checkbox-${i}`}>{c}</Label>
+          <Label
+            className="hover:cursor-pointer hover:text-primary"
+            htmlFor={`checkbox-${i}`}
+          >
+            {c}
+          </Label>
         </div>
       ))}
-    </>
+    </AccordionWrapper>
   );
 };
